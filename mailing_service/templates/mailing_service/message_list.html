@@ -1,0 +1,22 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="col-12 mb-4">
+    {% if perms.mailing_service.add_newsletter %}
+    <a class="btn btn-outline-primary" href="{% url 'mailing_service:create_message' %}">Добавить сообщение</a>
+    {% endif %}
+</div>
+{% load imgs %}
+
+<div class="col-12">
+    <div class="list-group">
+        {% for object in object_list %}
+        <a href="{% url 'mailing_service:message' object.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ object.subject }}</h5>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
