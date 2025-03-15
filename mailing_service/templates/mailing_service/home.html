@@ -1,0 +1,15 @@
+{% extends 'mailing_service/base.html' %}
+{%block title%}Главная{% endblock %}
+{%block content%}
+{% if user.is_authenticated %}
+<div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="statistics">
+              <p>Количество всех расссылок: {{ newsletters }}</p>
+              <p>Колличество активных рассылок: {{ started }}</p>
+              <p>Количество уникальных получателей: {{ clients }}</p>
+          </div>
+      </div>
+</div>
+{% endif %}
+{% endblock %}

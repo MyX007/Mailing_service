@@ -1,0 +1,28 @@
+{% extends 'mailing_service/base.html' %}
+{% load auth_extras %}
+{% block content %}
+<div class="col-12 mb-4">
+    {% if perms.mailing_service.add_client %}
+    <a class="btn btn-outline-primary" href="{% url 'mailing_service:create_client' %}">Добавить клиента</a>
+    {% endif %}
+</div>
+{% load imgs %}
+
+<div class="col-12">
+    <div class="list-group">
+        {% for object in object_list  %}
+        {% if request.user|has_group:"Managers" %}
+        <a href="{% url 'users:profile' object.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+
+              <h5 class="mb-1">{{ object.email }}
+                </h5>
+            </div>
+            <p class="mb-1">{{ object.email }}</p>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

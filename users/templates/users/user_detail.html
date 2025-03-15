@@ -1,0 +1,37 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+{% load auth_extras %}
+
+{% if object.email == request.user.email or request.user|has_group:"Managers" %}
+<div class="col-12">
+    <div class="card mb-12 box-shadow">
+        <div class="card-header">
+            {% if object.email == request.user.email %}
+            <h4 class="card-text">Ваш профиль</h4>
+            {% else %}
+            <h4 class="card-text">Профиль пользователя</h4>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <h5 class="card-text">Имя: {{object.first_name}}</h5>
+            <h5 class="card-text">Фамилия: {{object.last_name}}</h5>
+            <h5 class="card-text">Телефон: {{object.phone}}</h5>
+            <h5 class="card-text">E-mail: {{object.email}}</h5>
+        </div>
+        <div class="card-footer">
+            <div class="btn">
+                <input class="btn btn-primary" value="Назад" onClick="javascript:history.go(-1);">
+                {% if object.email == request.user.email %}
+                <a class="btn btn-secondary" href="{% url 'users:edit_profile' object.pk %}" role="button">Редактировать</a>
+                {% endif %}
+                {% if request.user|has_group:"Managers" and object.is_active is True %}
+                    <a class="btn btn-danger" href="{% url 'users:block' object.pk %}" role="button">Заблокировать</a>
+                {% elif request.user|has_group:"Managers" and object.is_active is False %}
+                    <a class="btn btn-danger" href="{% url 'users:unblock' object.pk %}" role="button">Разблокировать</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

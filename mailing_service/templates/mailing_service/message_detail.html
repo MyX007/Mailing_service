@@ -1,0 +1,21 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="col-12">
+    <div class="card mb-12 box-shadow">
+        <div class="card-header">
+            <h4 class="card-text">Сообщение</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-text">Тема: {{object.subject}}</h5>
+            <p class="card-text">Содержание: {{object.body}}</p>
+        </div>
+        <div class="card-footer">
+            <div class="btn">
+                <a href="{% url 'mailing_service:messages' %}" class="btn btn-primary">Назад</a>
+                <a class="btn btn-secondary" href="{% url 'mailing_service:update_message' object.pk %}" role="button">Редактировать</a>
+                <a class="btn btn-danger" href="{% url 'mailing_service:delete_message' object.pk %}" role="button">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
